@@ -55,4 +55,7 @@ fun main() {
     /*
         output: [A, CC, EEE, GGGG]
         */
+
+
+    // Yang perlu diperhatikan, fungsi distinct() tidak dapat digunakan pada object Map Collection.
 }
