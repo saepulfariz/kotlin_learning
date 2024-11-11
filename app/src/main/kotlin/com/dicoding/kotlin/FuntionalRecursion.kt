@@ -41,5 +41,30 @@ fun main() {
 
     // Exception in thread "main" java.lang.StackOverflowError
 
-    
+    // Tail Call Recursion
+    // Namun kita tidak perlu khawatir dengan masalah seperti di atas. Kotlin mendukung gaya pemrograman fungsional yang bernama tail recursion yakni sekumpulan urutan instruksi untuk menjalankan tugas tertentu (subroutine) yang dijalankan terakhir pada sebuah prosedur.
+
+    // Dengannya, kita bisa meminimalisir penumpukan frame ketika kita menerapkan recursive. Tail recursion akan memastikan proses sebelumnya telah selesai sebelum pemanggilan fungsi berikutnya dijalankan. Contohnya adalah seperti berikut:
+
+    fun factorial(n: Int, result: Int = 1): Int {
+        val newResult = n * result
+        return if (n == 1) {
+            newResult
+        } else {
+            factorial(n - 1, newResult)
+        }
+    }
+
+    // Namun dengan kode di atas kita tidak bisa langsung menghindari penumpukan frame. Ini karena secara default JVM tidak mendukung optimasi tail recursion. Untuk itu, Kotlin menyediakan modifier agar kita bisa tetap menerapkannya, yaitu modifier tailrec. Penggunaannya adalah seperti berikut:
+
+    tailrec fun factorial(n: Int, result: Int = 1): Int {
+        val newResult = n * result
+        return if (n == 1) {
+            newResult
+        } else {
+            factorial(n - 1, newResult)
+        }
+    }
+
+    // Pada kode di atas, modifier tailrec ditempatkan sebelum kata kunci fun. Ketika sebuah fungsi ditandai dengan modifier tailrec, maka fungsi tersebut hanya boleh dipanggil untuk dijalankan terakhir dan tidak boleh digunakan dari dalam blok try-catch-finally.
 }
